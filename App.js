@@ -26,12 +26,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {Provider as PaperProvider  } from "react-native-paper"
 import { useIsFocused } from '@react-navigation/native'
 import Icon from "react-native-vector-icons/Ionicons"
+import {navigationRef} from "./src/navigationRef/RootNavigation"
+
+import {Provider as AuthProvider} from "./src/context/AuthContext"
+
 
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const StackApp = createStackNavigator();
-const StackSignin = createStackNavigator()
+const StackSignup = createStackNavigator()
 const StackTrack = createStackNavigator()
 
 
@@ -129,12 +133,12 @@ function DrawerNavigator({navigation}){
 }*/
 
 
-function SigninStack(){
+function SignupStack(){
   return(
-    <StackSignin.Navigator initialRouteName="SigninScreen" >
-      <StackSignin.Screen name ="SigninScreen" component={SigninScreen} options={navOptionHandler} />
-      <SigniStackSigninnStack.Screen name ="SignupScreen" component={SignupScreen} options={navOptionHandler} />
-    </StackSignin.Navigator>
+    <StackSignup.Navigator initialRouteName="SignupScreen" >
+      <StackSignup.Screen name ="SignupScreen" component={SignupScreen} options={navOptionHandler} />
+      <StackSignup.Screen name ="SigninScreen" component={SigninScreen} options={navOptionHandler} />
+    </StackSignup.Navigator>
   )
 }
 
@@ -144,23 +148,24 @@ function TrackStack(){
   <StackTrack.Navigator initialRouteName="TrackListScreen" >
     <StackTrack.Screen name ="TrackListScreen" component={TrackListScreen} options={navOptionHandler} />
     <StackTrack.Screen name ="TrackDetailScreen" component={TrackDetailScreen} options={navOptionHandler} />
-  </StackTrack.Navigator>111
+  </StackTrack.Navigator>
   )
 }
 1
 function App() {
   return (
+<AuthProvider>
   <PaperProvider>
-    <NavigationContainer>
-      <StackApp.Navigator initialRouteName="SigninScreen">
+    <NavigationContainer ref={navigationRef}>
+      <StackApp.Navigator initialRouteName="SignupScreen">
 
             <StackApp.Screen name="HomeApp" component={DrawerNavigator} />
-            <StackApp.Screen name="SigninScreen" component={SigninScreen} options={navOptionHandler} />
-
+            <StackApp.Screen name="SignupScreen" component={SignupStack} options={navOptionHandler} />
 
       </StackApp.Navigator>
     </NavigationContainer>
   </PaperProvider>
+</AuthProvider>
   );
 }
 
