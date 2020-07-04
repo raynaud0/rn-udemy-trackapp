@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { View, StyleSheet,TextInput, TouchableOpacity, Text } from "react-native"
 import {Spacer} from "../components/index"
 import { Context as AuthContext} from "../context/AuthContext"
@@ -6,10 +6,13 @@ import {AuthForm, NavLink} from "../components/index"
 
 const SignupScreen = ({navigation}) => {
 
-    const {state, signup} = useContext(AuthContext)
+    const {state, signup, clearErrorMessage, tryLocalSignin} = useContext(AuthContext)
 
-
-
+    const listener = navigation.addListener('blur', clearErrorMessage);//baska screene gececekken addlistener
+        
+    useEffect(() => {
+        tryLocalSignin()
+    }, [])
 
 return (
     <View style={styles.container}>
@@ -35,31 +38,7 @@ const styles = StyleSheet.create({
     container:{
         justifyContent:"center",
         alignItems:"center",
-        flex:1,
-
-    },
-    input:{
-        borderWidth:1,
-        borderColor:"black",
-        borderRadius:25,
-        width:300,
-        height:50,
-
-    },
-    intext:{
-        height:50,
-        alignSelf:"center",
-
-    },
-    errorMessage:{
-        fontSize:16,
-        color:"red",
-        marginLeft:15,
-        marginTop:15
-    },
-    allreadyAcc:{
-        color:"blue",
-
+        flex:1
     }
 })
 export {SignupScreen}

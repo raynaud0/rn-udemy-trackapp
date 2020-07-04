@@ -38,8 +38,9 @@ const AuthForm = ( {headerText, errorMessage, onSubmit, submitButtonText} ) => {
 
 
         { errorMessage ? 
-            <Text style={styles.errorMessage}> {errorMessage} </Text> : null
+            <Text style={styles.errorMessageStyle}> {errorMessage} </Text> : null
         }
+
         <Spacer>
             <TouchableOpacity                
                 onPress={() => onSubmit({ email, password })}
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
         alignSelf:"center",
 
     },
-    errorMessage:{
+    errorMessageStyle:{
         fontSize:16,
         color:"red",
         marginLeft:15,

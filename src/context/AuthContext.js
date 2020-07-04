@@ -15,8 +15,35 @@ const authReducer = (state, action) => {
             return { errorMessage: "", token: action.payload}
         }
 
+        case "signin": {
+            return { errorMessage: "", token: action.payload}
+        }
+
+        case "clear_error_message": {
+            return { ...state, errorMessage:""}
+        }
+
         default:
             return state
+    }
+}
+
+const tryLocalSignin = (dispatch) => {
+    return async () => {
+        const token = await AsyncStorage.getItem("token")
+
+        if(token){
+            dispatch({ type: signin, payload: token})
+            RootNavigation.navigate("HomeApp")
+        } else {
+            RootNavigation.navigate("SignupScreen")
+        }
+    }
+}
+
+const clearErrorMessage = (dispatch) => {
+    return () => {
+        dispatch( { type: "clear_error_message" })
     }
 }
 
@@ -27,7 +54,7 @@ const signup = (dispatch) => {
             await AsyncStorage.setItem("token", response.data.token)
             dispatch({type: signup, payload: response.data.token})
 
-            RootNavigation.navigate("TrackListScreen");
+            RootNavigation.navigate("SigninScreen");
         }
         catch(err){
             dispatch( { type: "add_error", payload: "Something went wrong with sign up"})
@@ -37,7 +64,18 @@ const signup = (dispatch) => {
 
 
 const signin = (dispatch) => {
-    return ({email, password}) => {
+    return async ({email, password}) => {
+
+        try{
+            const response = await trackerApi.post("signin", {email, password})
+            await AsyncStorage.setItem("token", response.data.token)
+            dispatch({type: signin, payload: response.data.token})
+
+            RootNavigation.navigate("HomeApp")
+        }
+        catch(error){
+            dispatch( { type: "add_error", payload: "Something went wrong with sign up"})
+        }
 
     }
 }
@@ -51,6 +89,12 @@ const signout = (dispatch) => {
 
 export const {Provider, Context } = createDataContext(
     authReducer,
-    {signin, signout, signup},
+    {
+        signin, 
+        signout, 
+        signup, 
+        clearErrorMessage,
+        tryLocalSignin 
+    },
     {token: null, errorMessage: "" }
 )
