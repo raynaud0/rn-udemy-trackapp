@@ -15,6 +15,8 @@ SignupScreen,
 TrackCreateScreen,
 TrackListScreen,
 TrackDetailScreen,
+ResolveAuthScreen,
+
 } from "./src/screens/index"
 
 import { NavigationContainer } from "@react-navigation/native"
@@ -110,32 +112,19 @@ tabBarOptions= {{
 
 function DrawerNavigator({navigation}){
   return(
-    <Drawer.Navigator initialRouteName="StackTrack" >
-        <Drawer.Screen name = "StackTrack" component={TabNavigator} />
+    <Drawer.Navigator initialRouteName="TrackStack" >
+        <Drawer.Screen name = "TrackStack" component={TabNavigator} />
     </Drawer.Navigator>
 
   )
 }
 
 
-/*export default function App() {
-  return (
-    <PaperProvider>
-      <NavigationContainer>
-            <StackApp.Navigator initialRouteName="SigninScreen" >
-              <StackApp.Screen name ="HomeApp" component={DrawerNavigator} options={navOptionHandler} />
-              <StackApp.Screen name ="Login" component={Login} options={navOptionHandler} />
-              <StackApp.Screen name ="Register" component={RegisterStack} options={navOptionHandler} />
-            </StackApp.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
-  )
-}*/
-
 
 function SignupStack(){
   return(
-    <StackSignup.Navigator initialRouteName="SignupScreen" >
+    <StackSignup.Navigator initialRouteName="ResolveAuthScreen" >
+      <StackSignup.Screen name ="ResolveAuthScreen" component={ResolveAuthScreen} options={navOptionHandler} />
       <StackSignup.Screen name ="SignupScreen" component={SignupScreen} options={navOptionHandler} />
       <StackSignup.Screen name ="SigninScreen" component={SigninScreen} options={navOptionHandler} />
     </StackSignup.Navigator>
@@ -157,10 +146,10 @@ function App() {
 <AuthProvider>
   <PaperProvider>
     <NavigationContainer ref={navigationRef}>
-      <StackApp.Navigator initialRouteName="SignupScreen">
+      <StackApp.Navigator initialRouteName="ResolveAuthScreen">
 
             <StackApp.Screen name="HomeApp" component={DrawerNavigator} />
-            <StackApp.Screen name="SignupScreen" component={SignupStack} options={navOptionHandler} />
+            <StackApp.Screen name="ResolveAuthScreen" component={SignupStack} options={navOptionHandler} />
 
       </StackApp.Navigator>
     </NavigationContainer>

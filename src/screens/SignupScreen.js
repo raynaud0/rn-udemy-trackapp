@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, {useState, useContext} from 'react'
 import { View, StyleSheet,TextInput, TouchableOpacity, Text } from "react-native"
 import {Spacer} from "../components/index"
 import { Context as AuthContext} from "../context/AuthContext"
@@ -6,13 +6,10 @@ import {AuthForm, NavLink} from "../components/index"
 
 const SignupScreen = ({navigation}) => {
 
-    const {state, signup, clearErrorMessage, tryLocalSignin} = useContext(AuthContext)
+    const {state, signup, clearErrorMessage} = useContext(AuthContext)
 
     const listener = navigation.addListener('blur', clearErrorMessage);//baska screene gececekken addlistener
         
-    useEffect(() => {
-        tryLocalSignin()
-    }, [])
 
 return (
     <View style={styles.container}>
