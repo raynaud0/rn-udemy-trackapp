@@ -1,15 +1,15 @@
 import React, {useState, useContext} from 'react'
 import { View, StyleSheet,TextInput, TouchableOpacity, Text } from "react-native"
-import {Spacer} from "../components/index"
 import { Context as AuthContext} from "../context/AuthContext"
 import {AuthForm, NavLink} from "../components/index"
+
 
 const SignupScreen = ({navigation}) => {
 
     const {state, signup, clearErrorMessage} = useContext(AuthContext)
 
     const listener = navigation.addListener('blur', clearErrorMessage);//baska screene gececekken addlistener
-        
+
 
 return (
     <View style={styles.container}>
@@ -18,7 +18,7 @@ return (
         headerText="Sign Up for Tracker"
         errorMessage={state.errorMessage}
         submitButtonText="Kayıt Ol"
-        onSubmit={({email, password}) => signup({email, password})}//or just signup
+        onSubmit={signup}//or just signup
         />
 
         <NavLink 

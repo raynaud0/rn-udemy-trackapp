@@ -1,9 +1,7 @@
 import React, {useState, useContext} from 'react'
 import { View, StyleSheet,TextInput, TouchableOpacity, Text } from "react-native"
-import {Spacer} from "../components/index"
-import { Context} from "../context/AuthContext"
+import { Context } from "../context/AuthContext"
 import {AuthForm, NavLink} from "../components/index"
-
 
 
 const SigninScreen = ({navigation}) => {

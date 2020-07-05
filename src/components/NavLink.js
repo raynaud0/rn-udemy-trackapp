@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, StyleSheet,TextInput, TouchableOpacity, Text } from "react-native"
-import {Spacer} from "../components/index"
 import { useNavigation } from '@react-navigation/native';
 
 const NavLink = ({ text, routeName}) => {

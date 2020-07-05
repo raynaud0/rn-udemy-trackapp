@@ -146,10 +146,10 @@ function App() {
 <AuthProvider>
   <PaperProvider>
     <NavigationContainer ref={navigationRef}>
-      <StackApp.Navigator initialRouteName="ResolveAuthScreen">
+      <StackApp.Navigator initialRouteName="SignupStack">
 
             <StackApp.Screen name="HomeApp" component={DrawerNavigator} />
-            <StackApp.Screen name="ResolveAuthScreen" component={SignupStack} options={navOptionHandler} />
+            <StackApp.Screen name="SignupStack" component={SignupStack} options={navOptionHandler} />
 
       </StackApp.Navigator>
     </NavigationContainer>

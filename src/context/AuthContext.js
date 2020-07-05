@@ -7,24 +7,36 @@ import * as RootNavigation from '../navigationRef/RootNavigation';
 const authReducer = (state, action) => {
     switch(action.type){
 
-        case "add_error": {
+        case "add_error": 
             return { ...state, errorMessage:action.payload}
-        }
+        
 
-        case "signup" : {
+        case "signup" : 
             return { errorMessage: "", token: action.payload}
-        }
+        
 
-        case "signin": {
+        case "signin": 
             return { errorMessage: "", token: action.payload}
-        }
+        
 
-        case "clear_error_message": {
+        case "signout":
+            return { token: null, errorMessage:"" }
+        
+
+        case "clear_error_message": 
             return { ...state, errorMessage:""}
-        }
+        
 
         default:
             return state
+    }
+}
+
+const signout = (dispatch) => {
+    return async () => {
+        await AsyncStorage.removeItem("token")
+        dispatch({ type: "signout"})
+        RootNavigation.navigate("SignupScreen")
     }
 }
 
@@ -33,7 +45,7 @@ const tryLocalSignin = (dispatch) => {
         const token = await AsyncStorage.getItem("token")
 
         if(token){
-            dispatch({ type: signin, payload: token})
+            dispatch({ type: "signin", payload: token})
             RootNavigation.navigate("HomeApp")
         } else {
             RootNavigation.navigate("SignupScreen")
@@ -52,49 +64,37 @@ const signup = (dispatch) => {
         try{
             const response = await trackerApi.post("/signup", {email, password} )
             await AsyncStorage.setItem("token", response.data.token)
-            dispatch({type: signup, payload: response.data.token})
-
+            dispatch({type:"signup", payload: response.data.token})
+            
             RootNavigation.navigate("SigninScreen");
         }
         catch(err){
             dispatch( { type: "add_error", payload: "Something went wrong with sign up"})
+            console.log(err)
         }
     }
 }
 
 
-const signin = (dispatch) => {
-    return async ({email, password}) => {
-
+const signin = dispatch => async ({email, password}) => {
         try{
-            const response = await trackerApi.post("signin", {email, password})
+            const response = await trackerApi.post("/signin", {email, password})
             await AsyncStorage.setItem("token", response.data.token)
-            dispatch({type: signin, payload: response.data.token})
+            dispatch({type: "signin", payload: response.data.token})
 
             RootNavigation.navigate("HomeApp")
         }
-        catch(error){
+        catch(err){
             dispatch( { type: "add_error", payload: "Something went wrong with sign up"})
+            console.log(err)
         }
 
     }
-}
 
 
-const signout = (dispatch) => {
-    return () => {
-
-    }
-}
 
 export const {Provider, Context } = createDataContext(
     authReducer,
-    {
-        signin, 
-        signout, 
-        signup, 
-        clearErrorMessage,
-        tryLocalSignin 
-    },
+    { signin, signout, signup, clearErrorMessage, tryLocalSignin },
     {token: null, errorMessage: "" }
 )

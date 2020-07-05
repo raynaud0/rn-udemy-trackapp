@@ -1,12 +1,24 @@
-import React from 'react'
-import { View, StyleSheet, Text } from "react-native"
+import React, {useState, useContext} from 'react'
+import { View, StyleSheet,TextInput, TouchableOpacity, Text } from "react-native"
+import {Spacer} from "../components/index"
+import { Context as AuthContext} from "../context/AuthContext"
+
 
 const AccountScreen = () => {
+
+    const { signout } = useContext(AuthContext)
+
     return (
         <View>
-            <Text>
-                acc
-            </Text>
+
+        <Spacer>
+            <TouchableOpacity
+            onPress={() => signout() }
+            >
+                <Text>Sign OUT</Text>
+            </TouchableOpacity>
+        </Spacer>
+
         </View>
     )
 }
@@ -15,4 +27,5 @@ const AccountScreen = () => {
 const styles = StyleSheet.create({
 
 })
+
 export {AccountScreen}
