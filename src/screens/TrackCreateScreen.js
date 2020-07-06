@@ -1,16 +1,24 @@
-import React from 'react'
-import { View, StyleSheet, Text } from "react-native"
+import React, {useEffect} from 'react'
+import { View, StyleSheet, Text, Alert } from "react-native"
 import {Map} from "../components/index"
+import {Permission, PERMISSION_TYPE} from "../permissions/AppPermission"
+
+
+
 
 const TrackCreateScreen = () => {
+
+    useEffect(() => {
+        Permission.checkPermission(PERMISSION_TYPE.photo)
+        //Permission.requestMultiple(PERMISSION_TYPE.photo, PERMISSION_TYPE.location)
+
+    }, [])
+
+
     return (
         <View >
             
-            <Text>CREATE A TRACK</Text>
-            <Map 
-            style={styles.map}
-            />
-
+            <Map />
 
 
         </View>
@@ -19,10 +27,7 @@ const TrackCreateScreen = () => {
 
 
 const styles = StyleSheet.create({
-    map:{
-        height:200,
-        width:200
-    }
+
 })
 
 

@@ -1,5 +1,6 @@
 package com.trackapp;
 
+import com.airbnb.android.react.maps.MapsPackage;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
           return "index";
         }
       };
+
 
   @Override
   public ReactNativeHost getReactNativeHost() {

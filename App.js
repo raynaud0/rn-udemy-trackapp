@@ -33,7 +33,6 @@ import {navigationRef} from "./src/navigationRef/RootNavigation"
 import {Provider as AuthProvider} from "./src/context/AuthContext"
 
 
-
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const StackApp = createStackNavigator();
